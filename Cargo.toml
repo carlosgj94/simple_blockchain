@@ -1,0 +1,8 @@
+[package]
+name = "simple_blockchain"
+version = "0.1.0"
+authors = ["Carlos Gonzalez <carlosgj94@gmail.com>"]
+
+[dependencies]
+time = "^0.1"
+rust-crypto = "^0.2"
