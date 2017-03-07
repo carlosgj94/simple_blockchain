@@ -4,9 +4,20 @@ extern crate time;
 use crypto::digest::Digest;
 use crypto::sha2::Sha512;
 
+use std::io;
+
 fn main() {
     let mut blockchain = Vec::new();
     blockchain.push(get_genesis_block());
+    
+    let mut data = String::new();
+    println!("Enter the data: ");
+    io::stdin().read_line(&mut data)
+        .expect("Failed to read line");
+    {
+        let block = generate_next_block(data, &blockchain[0]);
+        blockchain.push(block);
+    }
 }
 
 pub struct Block{
@@ -28,7 +39,7 @@ fn calculate_hash(index: i64, p_hash: &String, timestamp: String, data: &String)
     return hasher.result_str();
 }
 
-fn generate_next_block(data: String, p_block: Block) -> Block {
+fn generate_next_block(data: String, p_block: &Block) -> Block {
     let index = p_block.index + 1;
     let timestamp = time::now().to_timespec();
         
@@ -36,7 +47,7 @@ fn generate_next_block(data: String, p_block: Block) -> Block {
         
     return Block{
         index: index, 
-        previous_hash: p_block.hash,
+        previous_hash: p_block.hash.clone(),
         timestamp: timestamp.sec.to_string(),
         data: data,
         hash: hash
