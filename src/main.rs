@@ -10,14 +10,25 @@ fn main() {
     let mut blockchain = Vec::new();
     blockchain.push(get_genesis_block());
     
-    let mut data = String::new();
-    println!("Enter the data: ");
-    io::stdin().read_line(&mut data)
-        .expect("Failed to read line");
-    {
-        let block = generate_next_block(data, &blockchain[0]);
-        blockchain.push(block);
+    let mut done = false;
+    let mut counter = 0;
+    while !done {
+        let mut data = String::new();
+        println!("Enter the data: ");
+        io::stdin().read_line(&mut data)
+            .expect("Failed to read line");
+
+        if data.trim()=="0"{
+            done=true;
+        }
+        else{ 
+            let block = generate_next_block(data, &blockchain[counter]);
+            blockchain.push(block);
+        }
+        counter= counter + 1;;
     }
+
+    print_blockchain(blockchain);
 }
 
 pub struct Block{
@@ -31,6 +42,16 @@ pub struct Block{
 /*fn calculate_hash_for_block(block: &Block) -> String {
     calculate_hash(block.index, &block.previous_hash, block.timestamp, &block.data)
 }*/
+fn print_blockchain(blockchain: Vec<Block>){
+    for block in &blockchain{
+        println!("Index: {}", block.index);
+        println!("Timestamp: {}", block.timestamp);
+        println!("Data: {}", block.data);
+        println!("Hash: {}", block.hash);
+        println!("Previous hash: {}", block.previous_hash);
+        println!("----------------------------------------")
+    }
+}
 
 fn calculate_hash(index: i64, p_hash: &String, timestamp: String, data: &String) -> String {
     let mut hasher = Sha512::new();
