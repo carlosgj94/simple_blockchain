@@ -85,6 +85,7 @@ fn generate_next_block(data: String, p_block: &Block) -> Block {
     let mut hash = String::new();
     hash = String::from("abcde");
     let mut nonce = 0;
+    println!("Mining...");
     while !proof_of_work(&hash){
         nonce = nonce + 1;
         hash = calculate_hash(index, nonce, &p_block.hash, timestamp.sec.to_string(), &data);
