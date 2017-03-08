@@ -1,4 +1,4 @@
-# simple_blockchain
+# simple_blockchain ![Blockchain](http://pix.iemoji.com/images/emoji/apple/ios-9/256/chains.png)
 Simple blockchain written in Rust from 0
 It has a simple mining proof of work. It consist simply in changing the nonce number in order to get "00000" at the beginning of the hash512.
 
