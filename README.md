@@ -4,9 +4,11 @@ It has a simple mining proof of work. It consist simply in changing the nonce nu
 
 ## Instalation:
 Just install Rust language and:
+```
 $ git clone https://github.com/carlosgj94/simple_blockchain.git
 $ cd simple_blockchain
 $ cargo run
+```
 
 ## Next steps: 
 - Add peers in order to being able to check fake chains and delete them
