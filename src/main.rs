@@ -6,6 +6,9 @@ use crypto::sha2::Sha512;
 
 use std::io;
 
+mod block;
+use block::Block;
+
 fn main() {
     let mut blockchain = Vec::new();
     blockchain.push(get_genesis_block());
@@ -29,15 +32,6 @@ fn main() {
     }
 
     print_blockchain(blockchain);
-}
-
-pub struct Block{
-    index: i64,
-    nonce: i64,
-    timestamp: String,
-    data: String,
-    hash: String,
-    previous_hash: String,
 }
 
 /*fn calculate_hash_for_block(block: &Block) -> String {
