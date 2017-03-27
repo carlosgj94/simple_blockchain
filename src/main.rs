@@ -12,7 +12,7 @@ use block::Block;
 fn main() {
     let mut blockchain = Vec::new();
     blockchain.push(get_genesis_block());
-    
+
     let mut done = false;
     let mut counter = 0;
     while !done {
@@ -24,7 +24,7 @@ fn main() {
         if data.trim()=="0"{
             done=true;
         }
-        else{ 
+        else{
             let block = generate_next_block(data, &blockchain[counter]);
             blockchain.push(block);
         }
@@ -39,13 +39,7 @@ fn main() {
 }*/
 fn print_blockchain(blockchain: Vec<Block>){
     for block in &blockchain{
-        println!("Index: {}", block.index);
-        println!("Nonce: {}", block.nonce);
-        println!("Timestamp: {}", block.timestamp);
-        println!("Data: {}", block.data);
-        println!("Hash: {}", block.hash);
-        println!("Previous hash: {}", block.previous_hash);
-        println!("----------------------------------------")
+        block.print_block();
     }
 }
 
@@ -74,7 +68,7 @@ fn proof_of_work(hash: &String) -> bool {
 fn generate_next_block(data: String, p_block: &Block) -> Block {
     let index = p_block.index + 1;
     let timestamp = time::now().to_timespec();
-    
+
     //Nonce part
     let mut hash = String::new();
     hash = String::from("abcde");
@@ -83,9 +77,9 @@ fn generate_next_block(data: String, p_block: &Block) -> Block {
     while !proof_of_work(&hash){
         nonce = nonce + 1;
         hash = calculate_hash(index, nonce, &p_block.hash, timestamp.sec.to_string(), &data);
-    }    
+    }
     return Block{
-        index: index, 
+        index: index,
         nonce: nonce,
         previous_hash: p_block.hash.clone(),
         timestamp: timestamp.sec.to_string(),
@@ -97,7 +91,7 @@ fn generate_next_block(data: String, p_block: &Block) -> Block {
 
 //Genesis block is the first block. Always
 fn get_genesis_block() -> Block {
-    Block{ 
+    Block{
     index: 0,
     nonce: 0,
     previous_hash: String::from("0"),
@@ -125,4 +119,4 @@ fn is_valid_new_block(n_block: Block, p_block: Block) -> bool {
 }
 
 //Conflict with two chains hanlding should go here
-//fn replace_chain(newBlocks: Vec<Block>) 
+//fn replace_chain(newBlocks: Vec<Block>)
